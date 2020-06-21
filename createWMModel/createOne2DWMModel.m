@@ -1,4 +1,4 @@
-function [axon_collection, model, zoomed_model] = createOne2DWMModel(axon_dictionary_path, model_params)
+function [axon_collection, model, zoomed_model, FVF, g_ratio, seed] = createOne2DWMModel(model_params)
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 %%%%%%%%%%%% Input required
@@ -100,11 +100,35 @@ if  isfield(model_params, 'save_model')
     if ~isfolder(model_params.save_model(1:a))
         mkdir(model_params.save_model(1:a));
     end    
+else
+    model_params.save_model = false; % KC 20200621
 end
+
+%%% added by KC, 20200621
+% for reproducibility
+if ~isfield(model_params, 'seed')
+    seed = rng('shuffle');
+else
+    seed = model_params.seed;
+end
+rng(seed)
+
+% for faster accessibility
+if ~isfield(model_params, 'dictionary')
+    axon_dictionary = 'axonMediumDict.mat';
+else
+    axon_dictionary = model_params.dictionary;
+end
+
+curr_dir        = fileparts(mfilename('fullpath'));
+Whist_HOME      = curr_dir(1:end-13);
+Whist_data_dir  = fullfile(Whist_HOME,'data');
+%%%
 
 % Load dictionary
 disp('load axon dictionary ...')
-load(axon_dictionary_path);
+% load(axon_dictionary_path);
+load(fullfile(Whist_data_dir,axon_dictionary)) % KC 20200621
 disp('done')
 
 disp(['randomly select ' num2str(model_params.number_of_axons) ' axon shapes ...']);
