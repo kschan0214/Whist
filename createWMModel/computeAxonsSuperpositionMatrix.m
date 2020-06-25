@@ -10,7 +10,8 @@ Dist = zeros(matrix_dims, matrix_dims);
 for k = 1:matrix_dims
     for l = k+1:matrix_dims
 %         Dist(k,l) = areAxonsSuperposed(axon_collection(k).data, axon_collection(l).data, dims);
-        if ((sum(axon_collection(k).amin > axon_collection(l).amax) >= 1) || (sum(axon_collection(k).amax < axon_collection(l).amin) >= 1))
+%         if ((sum(axon_collection(k).amin > axon_collection(l).amax) >= 1) || (sum(axon_collection(k).amax < axon_collection(l).amin) >= 1))
+        if any(axon_collection(k).amin > axon_collection(l).amax) || any(axon_collection(k).amax < axon_collection(l).amin)
             Dist(k,l) = 0;
         else
             Dist(k,l) = areAxonsSuperposed_alternative(axon_collection(k).data, axon_collection(l).data, dims); % for speed

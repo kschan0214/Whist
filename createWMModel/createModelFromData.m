@@ -35,13 +35,11 @@ if number_dims == 2
     Model = zeros(dims);
     
 %     %%%%%%%%% added by KC 20200625
+    % preallocate memory
+    axonCollection = myelin2axon_fast(axonCollection);
     myelinSize   = zeros(length(axonCollection),1);
     axonSize     = zeros(length(axonCollection),1);
-    for k= 1:length(axonCollection)       
-
-        axonCollection(k).myelin = round(axonCollection(k).data);
-        axonCollection(k).axon = myelin2axon(axonCollection(k).myelin);
-
+    for k= 1:length(axonCollection) 
         myelinSize(k) = size(axonCollection(k).myelin,1);
         axonSize(k)   = size(axonCollection(k).axon,1);
     end
@@ -49,11 +47,31 @@ if number_dims == 2
     numAxonEle      = cumsum([1;axonSize]);
     allMyelin       = zeros(numMyelinEle(end-1),2);
     allAxon         = zeros(numAxonEle(end-1),2);
-
     for k= 1:length(axonCollection)
-        allMyelin(numMyelinEle(k):numMyelinEle(k)+myelinSize(k)-1,:) = axonCollection(k).myelin;
-        allAxon(numAxonEle(k):numAxonEle(k)+axonSize(k)-1,:) = axonCollection(k).axon;
+        allMyelin(numMyelinEle(k):numMyelinEle(k)+myelinSize(k)-1,:)    = axonCollection(k).myelin;
+        allAxon(numAxonEle(k):numAxonEle(k)+axonSize(k)-1,:)            = axonCollection(k).axon;
     end
+
+%     myelinSize   = zeros(length(axonCollection),1);
+%     axonSize     = zeros(length(axonCollection),1);
+%     for k= 1:length(axonCollection)       
+% 
+%         axonCollection(k).myelin = round(axonCollection(k).data);
+%         axonCollection(k).axon = myelin2axon(axonCollection(k).myelin);
+% 
+%         myelinSize(k) = size(axonCollection(k).myelin,1);
+%         axonSize(k)   = size(axonCollection(k).axon,1);
+%     end
+%     numMyelinEle	= cumsum([1;myelinSize]);
+%     numAxonEle      = cumsum([1;axonSize]);
+%     allMyelin       = zeros(numMyelinEle(end-1),2);
+%     allAxon         = zeros(numAxonEle(end-1),2);
+% 
+%     for k= 1:length(axonCollection)
+%         allMyelin(numMyelinEle(k):numMyelinEle(k)+myelinSize(k)-1,:) = axonCollection(k).myelin;
+%         allAxon(numAxonEle(k):numAxonEle(k)+axonSize(k)-1,:) = axonCollection(k).axon;
+%     end
+
 %     allMyelin = [];
 %     allAxon = [];    
 %     for k= 1:length(axonCollection)
@@ -62,6 +80,7 @@ if number_dims == 2
 %         allMyelin = [allMyelin; myelin{k}];
 %         allAxon = [allAxon; axon{k}];
 %     end
+    %%%%%%%%%
     
     myelin_index = sub2ind(dims, allMyelin(:,1), allMyelin(:,2));
     axon_index = sub2ind(dims, allAxon(:,1), allAxon(:,2));

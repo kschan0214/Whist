@@ -18,7 +18,8 @@ if isempty([xa,ya])
     ya=1;
 end
 
-axon_index = zeros(length(xa + indminx),2);
+% axon_index = zeros(length(xa + indminx),2);
+axon_index = zeros(length(xa),2); % bug fix: KC 20200625
 axon_index(:,1) = xa + indminx;
 axon_index(:,2) = ya + indminy;
 
