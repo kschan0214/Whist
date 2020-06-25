@@ -14,15 +14,15 @@ function out = areAxonsSuperposed_alternative(axon1, axon2, dims)
 % a2max = max(axon2);
 
 % if ((sum(a1min > a2max) >= 1) || (sum(a1max < a2min) >= 1))
-if ((sum(axon1.amin > axon2.amax) >= 1) || (sum(axon1.amax < axon2.amin) >= 1))
-    out = 0;
-    return;
-end
+% if ((sum(axon1.amin > axon2.amax) >= 1) || (sum(axon1.amax < axon2.amin) >= 1))
+%     out = 0;
+%     return;
+% end
 
-ind1 = round(axon1.data);
+ind1 = round(axon1);
 sub1 = sub2ind(dims,ind1(:,1),ind1(:,2));  
 
-ind2 = round(axon2.data);
+ind2 = round(axon2);
 sub2 = sub2ind(dims,ind2(:,1),ind2(:,2));  
 
 C = intersect(sub1,sub2);

@@ -14,7 +14,7 @@ for iter = 1:max_iteration
         
         disp(['FVF : ' num2str(FVF)]);
     
-        pause(0.1)
+%         pause(0.1)
         if(FVF > max_FVF)
             break;
         end
