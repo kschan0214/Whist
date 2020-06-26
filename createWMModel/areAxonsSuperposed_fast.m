@@ -1,5 +1,5 @@
 
-function out = areAxonsSuperposed_alternative(axon1, axon2, dims)
+function out = areAxonsSuperposed_fast(axon1, axon2, dims)
 
 % a1min = axon1.amin;
 % a1max = axon1.amax;
@@ -25,9 +25,14 @@ sub1 = sub2ind(dims,ind1(:,1),ind1(:,2));
 ind2 = round(axon2);
 sub2 = sub2ind(dims,ind2(:,1),ind2(:,2));  
 
-C = intersect(sub1,sub2);
+% C = intersect(sub1,sub2);
+
 % if (length(C) > 0)
-if ~isempty(C)
+% if ~isempty(C)
+
+% check intersection
+% if numel([sub1;sub2]) == numel(unique([sub1;sub2]))
+if any(ismember(sub1,sub2))
     out = 1;
 else 
     out = 0;

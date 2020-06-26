@@ -8,8 +8,9 @@ disp('Packing in process...')
 
 FVF(1) = 0;
 for iter = 1:max_iteration
-    disp(['Iteration : ' num2str(iter)]);
+    
     if (mod(iter, 10)) == 0
+        disp(['Iteration : ' num2str(iter)]);
         [~, ~, FVF, ~] = createModelFromData(axon_collection, mask, plot_model);
         
         disp(['FVF : ' num2str(FVF)]);
