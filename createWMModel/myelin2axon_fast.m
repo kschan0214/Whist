@@ -1,13 +1,10 @@
-% function axon_index = myelin2axon_tmp(myelin_index)
+
 function axonCollection = myelin2axon_fast(axonCollection)
-
-nx = 64;
-myelin_map_all = zeros(nx,nx*length(axonCollection));
-
+%%% Step 1: pre-processing
+% compute all myelin sheath first
+maxDim = 60;
 for k= 1:length(axonCollection)     
     
-    ind_start   = 1 + (k-1)*nx;
-
     myelin_index = round(axonCollection(k).data);
     
     indminx = min(myelin_index(:,1))-1;
@@ -19,13 +16,31 @@ for k= 1:length(axonCollection)
     ind = sub2ind(sizeax, myelin_index(:,1) - indminx, myelin_index(:,2) - indminy);
     myelin_map(ind) = 1;
     
-    myelin_map_all(1:sizeax(1),ind_start:ind_start+sizeax(2)-1) = myelin_map;
-    
     axonCollection(k).myelin = myelin_index;
-end
     
+    axonCollection(k).myelin_map = myelin_map;
+    maxDim = max(maxDim,max(size(myelin_map)));
+
+end
+
+% insert at least 4 pixels gap in-between myelin sheath
+nx = (maxDim+4);
+% put all myelin onto a single 2D image
+myelin_map_all = zeros(nx,nx*length(axonCollection));
+for k= 1:length(axonCollection)     
+    
+    ind_start   = 1 + (k-1)*nx;
+    
+    myelin_map_all(1:size(axonCollection(k).myelin_map,1),ind_start:ind_start+size(axonCollection(k).myelin_map,2)-1) = axonCollection(k).myelin_map;
+    
+end
+
+%%% Step 2: Morphological operation to get axon
+% one imfill is needed instead of many
 axon_map_all = imfill(myelin_map_all, 'holes') - myelin_map_all;
 
+%%% Step 3: Post-processing
+% Store axon information back to input structure
 for k= 1:length(axonCollection) 
     ind_start   = 1 + (k-1)*nx;
     
