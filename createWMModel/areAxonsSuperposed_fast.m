@@ -30,14 +30,19 @@ sub2 = sub2ind(dims,ind2(:,1),ind2(:,2));
 % if (length(C) > 0)
 % if ~isempty(C)
 
-% check intersection
-% if numel([sub1;sub2]) == numel(unique([sub1;sub2]))
-if any(ismember(sub1,sub2))
+% check intersection, KC
+if isIntersect(sub1,sub2)
     out = 1;
 else 
     out = 0;
 end
 end
+
+%% check intersection, True: yes; False: no
+function output = isIntersect(sub1,sub2)
+    output = any(ismember(sub1,sub2));
+end
+
 
 
 

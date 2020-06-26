@@ -37,6 +37,7 @@ if number_dims == 2
 %     %%%%%%%%% added by KC 20200625
     % preallocate memory
     axonCollection = myelin2axon_fast(axonCollection);
+    
     myelinSize   = zeros(length(axonCollection),1);
     axonSize     = zeros(length(axonCollection),1);
     for k= 1:length(axonCollection) 
