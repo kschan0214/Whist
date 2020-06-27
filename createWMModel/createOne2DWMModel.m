@@ -80,7 +80,7 @@ end
 rng(model_params.seed)
 
 if model_params.DEBUG
-    disp('DEBUG mode on')
+    warning('DEBUG mode on')
     save('DEBUG_tmp_output','model_params');
 end
 %%%
@@ -165,11 +165,12 @@ if model_params.save_model
 end
 
 %%% KC added 20200621
-output.model        = model;
-output.zoomed_model = zoomed_model;
-output.FVF          = FVF;
-output.g_ratio      = g_ratio;
-output.model_params = model_params;
+output.axon_collection  = axon_collection;
+output.model            = model;
+output.zoomed_model     = zoomed_model;
+output.FVF              = FVF;
+output.g_ratio          = g_ratio;
+output.model_params     = model_params;
 output.mask = mask;
 output.dims = dims;
 %%%
@@ -187,20 +188,20 @@ Whist_data_dir  = fullfile(Whist_HOME,'data');
 
 dictionary_fn = fullfile(Whist_data_dir,'axonMediumDict.mat');
 
-try model_param2.max_FVF            = model_param.max_FVF;        	catch; model_param2.max_FVF = 0.8; end
-try model_param2.max_iteration      = model_param.max_iteration;   	catch; model_param2.max_FVF = 5000; end
-try model_param2.packing_speed      = model_param.packing_speed;  	catch; model_param2.packing_speed = 0.5; end
+try model_param2.max_FVF            = model_param.max_FVF;        	catch; model_param2.max_FVF         = 0.8; end
+try model_param2.max_iteration      = model_param.max_iteration;   	catch; model_param2.max_FVF         = 5000; end
+try model_param2.packing_speed      = model_param.packing_speed;  	catch; model_param2.packing_speed   = 0.5; end
 try model_param2.dispersion_mode    = model_param.dispersion_mode;	catch; model_param2.dispersion_mode = 'spread'; end
 try model_param2.number_of_axons    = model_param.number_of_axons;  catch; model_param2.number_of_axons = 400; end
-try model_param2.plot_model         = model_param.plot_model;     	catch; model_param2.plot_model = true; end
-try model_param2.tolerance          = model_param.tolerance;      	catch; model_param2.tolerance = 0.1; end
-try model_param2.seed               = model_param.seed;             catch; model_param2.seed = rng; end
+try model_param2.plot_model         = model_param.plot_model;     	catch; model_param2.plot_model      = true; end
+try model_param2.tolerance          = model_param.tolerance;      	catch; model_param2.tolerance       = 0.1; end
+try model_param2.seed               = model_param.seed;             catch; model_param2.seed            = rng; end
 % for faster accessibility
-try model_param2.dictionary_fn   	= model_param.dictionary_fn; 	catch; model_param2.dictionary_fn = dictionary_fn; end
+try model_param2.dictionary_fn   	= model_param.dictionary_fn; 	catch; model_param2.dictionary_fn   = dictionary_fn; end
 
-try model_param2.save_model       	= model_param.save_model;     	catch; model_param2.save_model = false; end
-try model_param2.verbose            = model_param.verbose;          catch; model_param2.verbose = true; end
-try model_param2.DEBUG              = model_param.DEBUG;            catch; model_param2.DEBUG = false; end
+try model_param2.save_model       	= model_param.save_model;     	catch; model_param2.save_model      = false; end
+try model_param2.verbose            = model_param.verbose;          catch; model_param2.verbose         = true; end
+try model_param2.DEBUG              = model_param.DEBUG;            catch; model_param2.DEBUG           = false; end
 
 
 end
